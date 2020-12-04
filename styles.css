@@ -1,0 +1,45 @@
+.elementDIV {
+  margin-top: 0.6px;
+}
+.nameDIV p {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-bottom: 0.1em;
+}
+.elementDetailsDIV {
+  display: flex;
+}
+.elementDetailsDIV div {
+  padding: 0 0.6em;
+  text-align: justify;
+  width: 49%;
+}
+.photo_gallery {
+  border: 1px gray solid;
+  background: darkgray;
+  height: 200px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.photo_gallery img {
+  object-fit: contain;
+}
+
+@media only screen and (max-width: 500px) {
+  .elementDetailsDIV {
+    flex-direction: column;
+  }
+  .elementDetailsDIV div {
+    padding: 0.2em 0.6em;
+    max-width: unset;
+  }
+  .descDIV {
+    align-self: flex-start;
+    max-width: 90%;
+  }
+  .supplDIV {
+    align-self: flex-end;
+    max-width: 80%;
+  }
+}
