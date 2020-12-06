@@ -58,5 +58,6 @@
   .figure img {
     object-fit: contain;
     max-height: 90%;
+    max-width: 95%;
   }
 }
