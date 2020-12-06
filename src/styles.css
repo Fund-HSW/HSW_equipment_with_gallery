@@ -1,4 +1,3 @@
-
 .elementDIV {
   margin-top: 0.6px;
 }
@@ -41,22 +40,23 @@
   }
   .descDIV {
     align-self: flex-start;
-    max-width: 90%;
+    max-width: 95%;
   }
   .supplDIV {
     align-self: flex-end;
-    max-width: 80%;
+    max-width: 90%;
   }
   .figure {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: 100%;
   }
   .figure p {
     margin: 5px 0 0 0;
   }
   .figure img {
     object-fit: contain;
-    max-width: 95%;
+    max-height: 90%;
   }
 }

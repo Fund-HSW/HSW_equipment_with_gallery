@@ -1,22 +1,30 @@
-import "./styles.css";
+const createGallery = () => {
+  let createdGallery = document.createElement("div");
+  createdGallery.setAttribute("class", "photo_gallery");
+  return createdGallery
+};
+
+const createIllustration = (source, imageWidth, counter) => {
+  let createdIllustration = document.createElement("img");
+  createdIllustration.setAttribute("src", source);
+  if (imageWidth !== null) 
+  {console.log(imageWidth)
+    createdIllustration.style.maxWidth = `${imageWidth}%` }
+  return createdIllustration;
+}
 
 const bigScreenGalery = (id, photoArray) => {
   let insertionSite = document.getElementById(id);
-  let gallery = document.createElement("div");
-  gallery.setAttribute("class", "photo_gallery");
-  let imageWidth = 100 / photoArray.length - 0.5;
+  let gallery = createGallery();
+  let imageWidth = Math.floor(100 / photoArray.length - 0.5);
   photoArray.forEach((element) => {
-    let illustration = document.createElement("img");
-    illustration.setAttribute("src", element);
-    illustration.style.maxWidth = `${imageWidth}%`;
-    gallery.append(illustration);
+    gallery.append(createIllustration(element,imageWidth));
   });
   insertionSite.append(gallery);
 };
 const smallScreenGalery = (id, photoArray) => {
   let insertionSite = document.getElementById(id);
-  let gallery = document.createElement("div");
-  gallery.setAttribute("class", "photo_gallery");
+  let gallery = createGallery();
 
   let counterBox = document.createElement("div");
   let counter = document.createElement("p");
@@ -40,8 +48,9 @@ const smallScreenGalery = (id, photoArray) => {
   let figure = document.createElement("div");
   figure.setAttribute("class", "figure");
 
-  figure.append(illustration);
-  figure.append(counterBox);
+  [illustration,counterBox].forEach((element) => {
+    figure.append(element);
+  })
 
   gallery.append(figure);
 
