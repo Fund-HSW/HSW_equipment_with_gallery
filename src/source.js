@@ -3,6 +3,7 @@ const createGallery = () => {
     createdGallery.setAttribute("class", "photo_gallery");
     return createdGallery
 };
+/*
   const createIllustration = (source, imageWidth, counterValue) => {
     let createdIllustration = document.createElement("img");
     createdIllustration.setAttribute("src", source);
@@ -10,19 +11,66 @@ const createGallery = () => {
       {createdIllustration.style.maxWidth = `${imageWidth}%` }
     return createdIllustration
 };
-  const createCounter = (currentIndex,maxIndex) => {
-    let counterBox = document.createElement("div");
-    let counter = document.createElement("p");
-    counter.innerText = `${currentIndex}/${maxIndex}`
-    counterBox.append(counter);
+*/
+class Picture {
+  constructor (source, imageWidth, counterValue) {
+    let picture = document.createElement("img");
+
+    picture.src = source;
+    picture.style.maxWidth = `${imageWidth}%` 
+
+    return picture
+  }
+}
+
+class Counter {
+  constructor (currentIndex,maxIndex){
+
+    let counterBox = document.createElement("div")
+    let counter = document.createElement("p")
+    counterBox.append(counter)
+
+    counter.innerText= `${currentIndex}/${maxIndex}`
+
     return counterBox
-};
+  }
+}
+/*
   const createFigure = () => {
     let createdFigure = document.createElement("div");
     createdFigure.setAttribute("class", "figure");
     createdFigure.currentIndex = 0;
     return createdFigure
 };
+*/
+class Figure {
+  constructor () {
+    let figure = document.createElement("div")
+    figure.className = "figure"
+    figure.currentIndex = 0
+    return figure
+  }
+}
+//work in progress
+class Modal {
+  constructor () {
+    let modal = document.createElement("div")
+    modal.className = "modal"
+
+    let modalContent = document.createElement("div")
+    modal.className = "modal_content"
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
+
+</div>
+  }
+}
+
+
 const preparePhotoData = (step,sourceData) => {
     let prepearedPhotoData = {}
     prepearedPhotoData.illustration = createIllustration(sourceData[step])
@@ -76,9 +124,9 @@ const smallScreenGalery = (id, photoArray) => {
     
         figure.onclick = (() => loadNext());
 };
-    
-const addGalery = (id, photoArray) => {
-    window.innerWidth > 500 
-    ? bigScreenGalery(id, photoArray) 
-    : smallScreenGalery(id, photoArray);
+
+class Galery {
+  constructor(id, listOfPictures) {
+    window.inderWidth > 500 ? bigScreenGalery(id, listOfPictures) : smallScreenGalery(id, listOfPictures)
+  }
 };
