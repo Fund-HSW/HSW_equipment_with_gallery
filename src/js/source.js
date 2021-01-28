@@ -4,6 +4,8 @@ const logThis = (label, info) => {
 };
 const createTag = (tag) => document.createElement(`${tag}`);
 
+
+//currently not in use
 const testPhoto = [
   "https://historycznesztukiwalki.pl/wp-content/uploads/2020/12/rekawice_1-scaled.jpg",
   "https://historycznesztukiwalki.pl/wp-content/uploads/2020/12/rekawice_2-scaled.jpg",
@@ -26,7 +28,10 @@ const checkIfFullsizeScreen = () => {
 let isFullsizeScreen = checkIfFullsizeScreen();
 
 const monitorScreenSize = () => {
-  window.addEventListener('resize', () => {isFullsizeScreen = checkIfFullsizeScreen(), logThis("current screen size is:", document.body.clientWidth), logThis("screen considerd Fullsize?", isFullsizeScreen)})
+  window.addEventListener('resize', 
+  () => {isFullsizeScreen = checkIfFullsizeScreen(), 
+    logThis("current screen size is:", document.body.clientWidth), 
+    logThis("screen considerd Fullsize?", isFullsizeScreen)})
 };
 
 const calcPictureWidth = (photoAmount) => {
@@ -161,7 +166,7 @@ class BigScreenGalery {
     return gallery    
 }
 }; 
-
+//needs work
 const handleWindowSizeChange = (hook, gallery) => {
   gallery = document.querySelector(`#${hook}`)
   gallery.oldContent = document.querySelector(`#${hook} .photo_gallery`)
