@@ -1,4 +1,4 @@
-//small helper
+//helpers
 const logThis = (label, info) => {
   console.log(`%c${label}: %c${info}`,"color:#42826D; font-weight:bold", "color:gray; font-style: italic")
 };
@@ -11,6 +11,7 @@ const testPhoto = [
   "https://historycznesztukiwalki.pl/wp-content/uploads/2020/12/rekawice_4-scaled.jpg"
 ];
 
+// basic functions
 const increment = (current, max) => {
   return current >= max-1 ? 0 : current+1
 };
@@ -18,27 +19,28 @@ const decrement = (current, max) => {
   return current <= 0 ? max-1 : current-1
 };
 
-const checkScreenSize = () => {
+const checkIfFullsizeScreen = () => {
   return (document.body.clientWidth > 1000) ? true : false
 };
 
-let isBigscreen = checkScreenSize();
+let isFullsizeScreen = checkIfFullsizeScreen();
 
 const monitorScreenSize = () => {
-  window.addEventListener('resize', () => {isBigscreen = checkScreenSize(), logThis("current screen size is:", document.body.clientWidth), logThis("screen considerd big?", isBigscreen)})
+  window.addEventListener('resize', () => {isFullsizeScreen = checkIfFullsizeScreen(), logThis("current screen size is:", document.body.clientWidth), logThis("screen considerd Fullsize?", isFullsizeScreen)})
 };
 
-const calcPhotoWidth = (photoAmount) => {
+const calcPictureWidth = (photoAmount) => {
   return Math.ceil(100/photoAmount)-1
-}
+};
 
+//component classes
 class EmptyGallery {
-  constructor(photoList, currentPhotoID) {
+  constructor(photoList) {
     const emptyGallery = createTag("div");
     
     emptyGallery.className="photo_gallery";
     emptyGallery.photoList = photoList;
-    emptyGallery.currentPhotoID=currentPhotoID;
+    emptyGallery.currentPhotoID=0;
     emptyGallery.gallerySize = photoList.length;
     
     return emptyGallery;
@@ -46,110 +48,37 @@ class EmptyGallery {
 };
 
 class Picture {
-  constructor (photoSrc, imageWidth) {
+  constructor (photoSrc, maxWidth) {
     let picture = createTag("img");
 
     picture.src = photoSrc;
-    picture.style.maxWidth = `${imageWidth}%` 
+    picture.style.maxWidth = `${maxWidth}%` 
 
     return picture
-  }
-}
+  };
+};
 
 class Counter {
-  constructor (currentIndex,maxIndex){
+  constructor (currentIndex, maxIndex){
 
     let counter = document.createElement("div");
-    counter.className="counter"
     counter.append(document.createElement("p"));
     counter.children[0].innerText= `(${currentIndex+1}/${maxIndex})`;
+    
+    counter.className="counter"
 
     return counter
   }
-}
-/*
-class Modal {
-  constructor () {
-    let modal = document.createElement("div")
-    modal.className = "modal"
-
-    let modalContent = document.createElement("div")
-    modal.className = "modal_content"
-
-  <-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
-  </div>
-
-</div>
-  }
-}
-*/
-/* do przepisania 
-const preparePhotoData = (step,sourceData) => {
-    let prepearedPhotoData = {}
-    prepearedPhotoData.illustration = createIllustration(sourceData[step])
-    prepearedPhotoData.counter = createCounter(step+1,sourceData.length)
-    return prepearedPhotoData
 };
-const cycleThroughRange = (figure, range) => {
-    let present = figure.currentIndex;
-    (present < range - 1) ? (present = present + 1) : (present = 0);
-    figure.currentIndex = present
-};
-
-const bigScreenGalery = (id, photoArray) => {
-    let insertionSite = document.getElementById(id);
-    let gallery = createGallery();
-    let imageWidth = Math.floor(100 / photoArray.length - 0.5);
-    photoArray.forEach((element) => {
-        gallery.append(createIllustration(element,imageWidth));
-    });
-    insertionSite.append(gallery);
-};
-const smallScreenGalery = (id, photoArray) => {
-    let insertionSite = document.getElementById(id)
-    let gallery = createGallery()
-    let figure = createFigure();
-
-    let photoData = preparePhotoData(figure.currentIndex, photoArray); 
-
-    const loadPicture = () => {
-        [photoData.illustration,photoData.counter].forEach(
-        (element) => figure.append(element)
-        )
-    };
-
-    loadPicture();
-   
-    gallery.append(figure);
-    insertionSite.append(gallery);
-    
-    const loadNext = () => {
-      /*  cycleThroughRange(figure,photoArray.length);
-        photoData = preparePhotoData(figure.currentIndex, photoArray)
-        
-        figure.children[0] = photoData.illustration
-        figure.children[1] = photoData.counter
-        gallery.children[0] = figure
-        insertionSite.children[0] = gallery
-        
-       console.log("CLICK! CLICK ;/")
-    };
-    
-        figure.onclick = (() => loadNext());
-};
-*/
 
 const createGalleryDependingOnScreensize = (photoList, gallerySize) => {
-  return isBigscreen ? 
+  return isFullsizeScreen ? 
   (logThis("making big gallery", `(${document.body.clientWidth})`), 
-  new BigScreenGalery(photoList, calcPhotoWidth(gallerySize))) : 
+  new BigScreenGalery(photoList, calcPictureWidth(gallerySize))) : 
   (logThis("making small gallery",`(${document.body.clientWidth})`),
   new SmallScreenGalery(photoList, 0, gallerySize, "100")
-  );
-}
+  )
+};
 
 class Gallery {
   constructor(hook, photoList) {
@@ -158,7 +87,7 @@ class Gallery {
     let gallery = new EmptyGallery(photoList);
     document.querySelector(`#${hook}`).append(gallery);
     
-    gallery.isWidescreenGallery = isBigscreen;
+    gallery.isWidescreenGallery = isFullsizeScreen;
     logThis("is this gallery big?", gallery.isWidescreenGallery)
 
     gallery.content = createGalleryDependingOnScreensize(gallery.photoList,gallery.gallerySize);
@@ -198,7 +127,7 @@ class Interface {
 
     incrementingBtn.addEventListener(
       "click", 
-      () => {currentID = increment(currentID, maxID), logThis("Click!", currentID)});
+      () => {currentID = increment(currentID, maxID), logThis("Click!", currentID)}, currentID);
 
     decrementingBtn.addEventListener(
        "click", 
@@ -234,18 +163,20 @@ class BigScreenGalery {
 }; 
 
 const handleWindowSizeChange = (hook, gallery) => {
-  gallery = document.querySelector(`#${hook} .photo_gallery`)
-  gallery.content = createGalleryDependingOnScreensize(gallery.photoList,gallery.gallerySize)
+  gallery = document.querySelector(`#${hook}`)
+  gallery.oldContent = document.querySelector(`#${hook} .photo_gallery`)
+  newContent = createGalleryDependingOnScreensize(gallery.photoList, gallery.gallerySize)
 
-  gallery.replaceChildren(gallery.content, gallery.children[0])
-  gallery.isWidescreenGallery = isBigscreen
+  gallery.oldContent = gallery.replaceChild(newContent, gallery.oldContent)
+  
+  gallery.isWidescreenGallery = isFullsizeScreen
 };
 
 const addGallery = (hook, photoList) => {
   let gallery = new Gallery(hook, photoList);
   
   window.addEventListener('resize', ()=>{
-    if (gallery.isWidescreenGallery !== isBigscreen) {
+    if (gallery.isWidescreenGallery !== isFullsizeScreen) {
       handleWindowSizeChange(hook, gallery)
     }
   }
