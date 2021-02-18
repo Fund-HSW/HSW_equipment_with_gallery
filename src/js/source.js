@@ -15,10 +15,12 @@ const testPhoto = [
 
 // basic functions
 const increment = (current, max) => {
-  return current >= max-1 ? 0 : current+1
+  if (current < 0 ) {return 0} 
+  return current >= max ? 0 : current+1
 };
 const decrement = (current, max) => {
-  return current <= 0 ? max-1 : current-1
+  if (current > max) {return 0}
+  return current <= 0 ? max : current-1
 };
 
 const checkIfFullsizeScreen = () => {
@@ -27,6 +29,7 @@ const checkIfFullsizeScreen = () => {
 
 let isFullsizeScreen = checkIfFullsizeScreen();
 
+//
 const monitorScreenSize = () => {
   window.addEventListener('resize', 
   () => {isFullsizeScreen = checkIfFullsizeScreen(), 
@@ -189,3 +192,13 @@ const addGallery = (hook, photoList) => {
 
   return gallery
 };
+
+const testFunction = function(arg) {
+  return arg};
+
+module.exports = {
+increment : increment,
+decrement : decrement, 
+testFunction : testFunction,
+calcPictureWidth : calcPictureWidth
+}
